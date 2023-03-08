@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import UserPicture from "./UserPicture";
 
 export default function Header() {
   const [logoutOpen, setLogoutOpen] = useState(false);
@@ -16,10 +17,7 @@ export default function Header() {
           onClick={() => setLogoutOpen(!logoutOpen)}
           name={logoutOpen ? "chevron-up-outline" : "chevron-down-outline"}
         ></ion-icon>
-        <img
-          alt=""
-          src="https://series.band.uol.com.br/wp-content/uploads/2014/05/queixo-rubro-300x300-1.jpg"
-        ></img>
+        <UserPicture/>
       </ProfileSettings>
     </Container>
   );
@@ -73,8 +71,6 @@ const ProfileSettings = styled.div`
     }
   }
   > img {
-    width: 53px;
-    height: 53px;
-    border-radius: 26px;
+    
   }
 `;
