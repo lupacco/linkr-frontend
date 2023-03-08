@@ -11,7 +11,7 @@ export default function User(){
             <Container>
                 <div>
                     <UserPicture/>
-                    <h1>Juvenal Juvêncio's posts</h1>
+                    <h1>Juvenal Juvêncio's postsssss</h1>
                 </div>
                 <Post/>
             </Container>

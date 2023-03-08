@@ -65,7 +65,7 @@ const Container = styled.div`
       ion-icon {
         font-size: 20px;
         color: ${(props) => (props.liked ? "#AC0000" : "#FFFFFF")};
-        :hover {
+        &:hover {
           cursor: pointer;
         }
       }
