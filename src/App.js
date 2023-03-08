@@ -9,7 +9,9 @@ import Hashtag from "./pages/Hashtag"
 
 function App() {
   return (
-    <></>
+    <>
+      <h1>Eaeeeeeee galera</h1>
+    </>
   );
 }
 
