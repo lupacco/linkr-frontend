@@ -1,16 +1,22 @@
+import { useState } from "react";
 import styled from "styled-components";
 //Components
 import UserPicture from "./UserPicture";
 
 export default function Post() {
+  const [liked, setLiked] = useState(false);
+
   return (
-    <Container>
+    <Container liked={liked}>
       <div>
         <UserPicture />
         <div>
-          <ion-icon on name="heart-outline"></ion-icon>
+          <ion-icon
+            onClick={() => setLiked(!liked)}
+            name={liked ? "heart" : "heart-outline"}
+          ></ion-icon>
         </div>
-        <p>13,5k</p>
+        <p>16,5k</p>
       </div>
       <div>
         <h1>Juvenal Juvêncio</h1>
@@ -52,14 +58,15 @@ const Container = styled.div`
       margin-bottom: 8px;
     }
     :first-child {
-        height: 50vh;
+      height: 50vh;
       > img {
         margin-bottom: 12px;
       }
       ion-icon {
         font-size: 20px;
-        :hover{
-            cursor: pointer;
+        color: ${(props) => (props.liked ? "#AC0000" : "#FFFFFF")};
+        :hover {
+          cursor: pointer;
         }
       }
       display: flex;
@@ -80,10 +87,10 @@ const LinkSection = styled.section`
   h2 {
     font-size: 16px;
   }
-  p{
+  p {
     text-align: justify;
   }
-  >img{
+  > img {
     width: 155px;
     height: 155px;
     margin-left: 8px;
