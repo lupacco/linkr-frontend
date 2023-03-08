@@ -1,9 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 
+// font-family: 'Lato', sans-serif;
+// font-family: 'Oswald', sans-serif;
+// font-family: 'Passion One', cursive;
+
 const GlobalStyle = createGlobalStyle`
     *{
         box-sizing: border-box;
-        font-family: 'Lexend Deca', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-weight: 400;
         margin: 0;
         padding: 0;
@@ -11,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
     body{
         margin: 0;
         padding: 0;
+        background-color: #2F2F2F;
     }
 `;
 
