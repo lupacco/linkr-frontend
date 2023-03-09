@@ -4,34 +4,34 @@ import Header from "../components/Header";
 import Post from "../components/Post";
 import UserPicture from "../components/UserPicture";
 
-export default function User(){
-    return(
-        <>
-            <Header/>
-            <Container>
-                <div>
-                    <UserPicture/>
-                    <h1>Juvenal Juvêncio's postsssss</h1>
-                </div>
-                <Post/>
-            </Container>
-        </>
-    )
+export default function User() {
+  return (
+    <>
+      <Header />
+      <Container>
+        <UserHeader>
+          <UserPicture />
+          <h1>Juvenal Juvêncio's posts</h1>
+        </UserHeader>
+        <Post />
+      </Container>
+    </>
+  );
 }
 
 const Container = styled.div`
-    >div{
-        display: flex;
-        align-items: center;
-        margin: 32px 0;
-        >h1{
-            margin-left: 8px;
-            font-family: 'Oswald', sans-serif;
-            color: #FFFFFF;
-            font-size: 50px;
-            font-weight: 700;
-        }
-    }
-    background-color: green;
-    margin: 0 20%;
-`
+  background-color: green;
+  margin: 0 20%;
+`;
+
+const UserHeader = styled.div`
+  display: flex;
+  align-items: center;
+  > h1 {
+    margin-left: 16px;
+    font-family: "Oswald", sans-serif;
+    color: #ffffff;
+    font-size: 50px;
+    font-weight: 700;
+  }
+`;

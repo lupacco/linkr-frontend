@@ -18,6 +18,7 @@ export default function Post() {
         </div>
         <p>16,5k</p>
       </div>
+
       <div>
         <h1>Juvenal Juvêncio</h1>
         <p>
@@ -48,6 +49,8 @@ const Container = styled.div`
   background-color: #171717;
   border-radius: 16px;
   padding: 16px;
+  display: flex;
+  margin: 32px 0;   
   > div {
     color: #ffffff;
     > h1 {
@@ -57,8 +60,8 @@ const Container = styled.div`
       font-size: 16px;
       margin-bottom: 8px;
     }
-    :first-child {
-      height: 50vh;
+    &:first-child {
+      /* height: 50vh; */
       > img {
         margin-bottom: 12px;
       }
