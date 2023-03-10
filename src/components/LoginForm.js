@@ -1,34 +1,85 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { signIn } from "../services/services.js";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
-export default function LoginForm() {
-    return (
+export default function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
+  function sendForm(e) {
+    e.preventDefault();
+    setLoading(true);
 
-        <LoginContainer>
-            <InputContainer>
-                <input
-                    placeholder="e-mail"
-                    type="email"
-                    required
-                />
-                <input
-                    placeholder="password"
-                    type="password"
-                    required
-                />
-                <button >
-                    Log In
-                </button>
-                <Link to="/signup">
-                    <ButtonCreate>First time? Create an account!</ButtonCreate>
-                </Link>
-            </InputContainer>
-        </LoginContainer>
-    )
+    const body = {
+      email,
+      password
+    }
+
+    signIn(body)
+      .then((res) => {
+        resetForm();
+        localStorage.setItem("profileImg", JSON.stringify(res.data.picture_url));
+        localStorage.setItem("token", JSON.stringify(res.data.token));
+        localStorage.setItem("username", JSON.stringify(res.data.username));
+        localStorage.setItem("id", JSON.stringify(res.data.id));
+        navigate("/home");
+        setLoading(false);
+      })
+      .catch((res) => {
+        if (res.response.status === 401) {
+          resetForm();
+          alert("Login ou senha incorretos!");
+          setLoading(false);
+          return;
+        }
+
+        resetForm();
+        alert("Tente novamente mais tarde!");
+        setLoading(false)
+      })
+  }
+
+  function resetForm() {
+    setEmail("");
+    setPassword("");
+  }
+
+  return (
+    <AuthContainer>
+      <Form onSubmit={sendForm}>
+        <input
+          placeholder="e-mail"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          disabled={loading}
+        />
+
+        <input
+          placeholder="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          disabled={loading}
+        />
+        <button disabled={loading}>
+          Log In
+        </button>
+
+        <Link to="/signup">
+          <ButtonLogin>First time? Create an account!</ButtonLogin>
+        </Link>
+      </Form>
+    </AuthContainer>
+  );
 }
 
-const LoginContainer = styled.div`
+const AuthContainer = styled.div`
   width: 40%;
   height: 100%;
   display: flex;
@@ -39,7 +90,7 @@ const LoginContainer = styled.div`
     align-items: flex-start;
   }
 `;
-const InputContainer = styled.div`
+const Form = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -92,9 +143,11 @@ const InputContainer = styled.div`
   }
 `;
 
-const ButtonCreate = styled.div`
+const ButtonLogin = styled.div`
   font-size: 20px;
   line-height: 24px;
+  font-family: "Lato";
+  margin-top: 14px;
   text-decoration-line: underline;
   color: #ffffff;
 `;

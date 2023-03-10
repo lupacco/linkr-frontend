@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export default function Logo() {
     return (
-
         <LogoContainer>
             <div>
                 <h1>linkr</h1>
