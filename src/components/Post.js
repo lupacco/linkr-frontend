@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 //Components
@@ -11,12 +12,31 @@ export default function Post() {
   const [url, setUrl] = useState("");
   const [content, setContent] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const URL = `http://localhost:5000/users`;
+
+    const promise = axios.get(URL);
+    promise.then((res) => setPosts(res.data));
+    promise.catch(() => {
+      alert(
+        "An error occured while trying to fetch the posts, please refresh the page"
+      );
+    });
+  }, []);
+  if (posts === undefined) {
+    return <div>Loading...</div>;
+  }
+  if (posts.length === 0) {
+    return <div>"There are no posts yet"</div>;
+  }
 
   function handlePublish(event) {
     event.preventDefault();
 
     axios
-      .post("http://localhost:5000/posts", {
+      .post(`http://localhost:5000/users`, {
         url: url,
         content: content,
       })
@@ -32,6 +52,7 @@ export default function Post() {
         setDisabled(!disabled);
       });
   }
+
   function handleClick() {
     setDisabled(!disabled);
   }
@@ -40,9 +61,9 @@ export default function Post() {
     <>
       <Timeline>timeline</Timeline>
       <ContainerPublish data-test="publish-box">
-        <divUser>
+        <div>
           <UserPicture />
-        </divUser>
+        </div>
         <FormContainer onSubmit={handlePublish}>
           <p>What are you going to share today?</p>
           <input
@@ -78,35 +99,46 @@ export default function Post() {
           <div>
             <ion-icon on name="heart-outline"></ion-icon>
           </div>
-
           <p>13,5k</p>
         </div>
-        <div>
-          <h1>Juvenal Juvêncio</h1>
-          <p>
-            lorem saubsafub asubfsuf b apsuofsufb apsoub fpasu fb ausbf pusfb af
-            baps bapsuf baps fubaspf ubaspf bsapf ubasfp bas pfububf
-            asufbsapufbas ufbas pb apsufbapsufbaspf ubaspfubsafp
-          </p>
-          <LinkSection>
-            <div>
-              <h2>Bla bla bla bla</h2>
-              <p>
-                lorem saubsafub asubfsuf b apsuofsufb apsoub fpasu fb ausbf
-                pusfb af baps bapsuf baps fubaspf ubaspf bsapf ubasfp bas
-                pfububf asufbsapufbas ufbas pb apsufbapsufbaspf ubaspfubsafp
-              </p>
+
+        {posts.map(function (post) {
+          //renderizar(post)
+          return (
+            <div key={post.id} data-test="publish-btn" >
+              <div>
+                <h1 data-test="username" >Juvenal Juvêncio</h1>
+                <p data-test="description" >{post.content}</p>
+                <LinkSection>
+                  <div>
+                    {/* <h2>{post.content}</h2> */}
+                    <p data-test="link" >{post.url}</p>
+                  </div>
+                  {/* <img alt="" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8Vyp-mi0x3JFTE66-dkmRIxEFdfe1byjMjQ&usqp=CAU"></img> */}
+                </LinkSection>
+              </div>
             </div>
-            <img
-              alt=""
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8Vyp-mi0x3JFTE66-dkmRIxEFdfe1byjMjQ&usqp=CAU"
-            ></img>
-          </LinkSection>
-        </div>
+          );
+        })}
+        <div></div>
       </Container>
     </>
   );
 }
+
+//function renderizar(urlLink) {
+// const urlMetadata = require("url-metadata");
+// urlMetadata(urlLink).then(
+//   function (metadata) {
+//     // success handler
+//     console.log(metadata);
+//   },
+//   function (error) {
+//     // failure handler
+//     console.log(error);
+//   }
+// );
+//}
 
 const Container = styled.div`
   background-color: #171717;
@@ -134,8 +166,8 @@ const Container = styled.div`
       }
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+      // align-items: center;
+      // justify-content: flex-start;
       margin-right: 12px;
     }
   }
@@ -176,8 +208,7 @@ const ContainerPublish = styled.div`
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
-
-  > divUser {
+  > div {
     width: 50px;
     height: 50px;
     border-radius: 26.5px;
