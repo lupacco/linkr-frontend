@@ -9,34 +9,33 @@ export default function Post() {
   const navigate = useNavigate();
 
   const [url, setUrl] = useState("");
-  const [description, setDescription] = useState("");
+  const [content, setContent] = useState("");
   const [disabled, setDisabled] = useState(false);
 
   function handlePublish(event) {
     event.preventDefault();
 
     axios
-      .post("http://localhost:5000/", {
+      .post("http://localhost:5000/posts", {
         url: url,
-        description: description,
+        content: content,
       })
       .then((res) => {
         console.log(res.data);
         navigate("/user");
-        setUrl("")
-        setDescription("")
+        setUrl("");
+        setContent("");
         setDisabled(!disabled);
-        
       })
       .catch(() => {
-        alert("There was an error publishing your link")
+        alert("There was an error publishing your link");
         setDisabled(!disabled);
-        
-      })
+      });
   }
-  function handleGameClick() {
+  function handleClick() {
     setDisabled(!disabled);
   }
+
   return (
     <>
       <Timeline>timeline</Timeline>
@@ -60,14 +59,14 @@ export default function Post() {
           <input
             data-test="description"
             onChange={(e) => {
-              setDescription(e.target.value);
+              setContent(e.target.value);
             }}
-            value={description}
+            value={content}
             type="text"
             placeholder="Awesome article about #javascript "
             disabled={disabled}
           ></input>
-          <button data-test="publish-btn" type="submit" onClick={handleGameClick} >
+          <button data-test="publish-btn" type="submit" onClick={handleClick}>
             <p>Publish</p>
           </button>
         </FormContainer>
@@ -189,50 +188,49 @@ const ContainerPublish = styled.div`
 
 const FormContainer = styled.form`
   display: flex;
- 
+
   margin: 18px 22px;
   flex-direction: column;
   flex-wrap: nowrap;
-  
+
+  > p {
+    margin-bottom: 15px;
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 24px;
+    color: #707070;
+  }
+
+  > input {
+    width: 50vh;
+    margin-bottom: 5px;
+    display: flex;
+    border-style: none;
+    background: #efefef;
+    border-radius: 5px;
+    &::placeholder {
+      color: #949494;
+      font-size: 18px;
+    }
+  }
+  > button {
+    border-style: none;
+    margin-bottom: 15px;
+    width: 112px;
+    height: 31px;
+    background: #1877f2;
+    border-radius: 5px;
+    margin-left: 325px;
+    margin-right: 22px;
     > p {
-      margin-bottom: 15px;
       font-family: "Lato";
       font-style: normal;
-      font-weight: 300;
-      font-size: 20px;
-      line-height: 24px;
-      color: #707070;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 17px;
+      color: #ffffff;
     }
-
-    > input {
-      width: 50vh;
-      margin-bottom: 5px;
-      display: flex;
-      border-style: none;
-      background: #efefef;
-      border-radius: 5px;
-      &::placeholder {
-        color: #949494;
-        font-size: 18px;
-      }
-    }
-    > button {
-      border-style: none;
-      margin-bottom: 15px;
-      width: 112px;
-      height: 31px;
-      background: #1877f2;
-      border-radius: 5px;
-      margin-left: 325px;
-      margin-right: 22px;
-      > p {
-        font-family: "Lato";
-        font-style: normal;
-        font-weight: 700;
-        font-size: 14px;
-        line-height: 17px;
-        color: #ffffff;
-      }
-    }
-  
+  }
 `;
