@@ -28,10 +28,6 @@ export default function Post() {
   if (posts === undefined) {
     return <div>Loading...</div>;
   }
-  
-  if (posts.length === 0) {
-    return <div>"There are no posts yet"</div>;
-  }
 
   function handlePublish(event) {
     event.preventDefault();
@@ -94,13 +90,26 @@ export default function Post() {
         </FormContainer>
       </ContainerPublish>
 
-      
-        {posts.map(function (post) {
-          //renderizar(post)
-
-          return (
-            <div key={post.id} data-test="publish-btn">
-              <Container>
+      {posts.map(function (post) {
+        //renderizar(post)
+        // render(post) {
+        //   return (   
+        //           <>
+        //               {(() => {
+        //                 if (post.length === 0){
+        //                     return (
+        //                         <div>"There are no posts yet"</div>
+        //                     )
+        //                 }
+        //                 return null;
+        //               })()}
+        //           </>
+        //         )
+        //     }
+        return (
+          <div key={post.id} data-test="publish-btn">
+            
+            <Container>
               <div>
                 <UserPicture />
                 <div>
@@ -119,10 +128,10 @@ export default function Post() {
                   {/* <img alt="" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8Vyp-mi0x3JFTE66-dkmRIxEFdfe1byjMjQ&usqp=CAU"></img> */}
                 </LinkSection>
               </div>
-              </Container>
-            </div>
-          );
-        })}
+            </Container>
+          </div>
+        );
+      })}
     </>
   );
 }
