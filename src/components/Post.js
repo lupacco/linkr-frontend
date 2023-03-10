@@ -28,6 +28,7 @@ export default function Post() {
   if (posts === undefined) {
     return <div>Loading...</div>;
   }
+  
   if (posts.length === 0) {
     return <div>"There are no posts yet"</div>;
   }
@@ -93,35 +94,35 @@ export default function Post() {
         </FormContainer>
       </ContainerPublish>
 
-      <Container>
-        <div>
-          <UserPicture />
-          <div>
-            <ion-icon on name="heart-outline"></ion-icon>
-          </div>
-          <p>13,5k</p>
-        </div>
-
+      
         {posts.map(function (post) {
           //renderizar(post)
+
           return (
-            <div key={post.id} data-test="publish-btn" >
+            <div key={post.id} data-test="publish-btn">
+              <Container>
               <div>
-                <h1 data-test="username" >Juvenal Juvêncio</h1>
-                <p data-test="description" >{post.content}</p>
+                <UserPicture />
+                <div>
+                  <ion-icon on name="heart-outline"></ion-icon>
+                </div>
+                <p>13,5k</p>
+              </div>
+              <div>
+                <h1 data-test="username">Juvenal Juvêncio</h1>
+                <p data-test="description">{post.content}</p>
                 <LinkSection>
                   <div>
                     {/* <h2>{post.content}</h2> */}
-                    <p data-test="link" >{post.url}</p>
+                    <p data-test="link">{post.url}</p>
                   </div>
                   {/* <img alt="" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8Vyp-mi0x3JFTE66-dkmRIxEFdfe1byjMjQ&usqp=CAU"></img> */}
                 </LinkSection>
               </div>
+              </Container>
             </div>
           );
         })}
-        <div></div>
-      </Container>
     </>
   );
 }
@@ -166,8 +167,8 @@ const Container = styled.div`
       }
       display: flex;
       flex-direction: column;
-      // align-items: center;
-      // justify-content: flex-start;
+      align-items: center;
+      justify-content: flex-start;
       margin-right: 12px;
     }
   }
