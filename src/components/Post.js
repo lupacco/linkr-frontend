@@ -1,15 +1,11 @@
 import styled from "styled-components";
-<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-=======
->>>>>>> 3a5b1c8f1e0571b8c41fd9fee349c4ef010157c1
 //Components
 import UserPicture from "./UserPicture";
 
 export default function Post() {
-<<<<<<< HEAD
   const navigate = useNavigate();
 
   const [url, setUrl] = useState("");
@@ -109,40 +105,6 @@ export default function Post() {
         </div>
       </Container>
     </>
-=======
-  return (
-    <Container>
-      <div>
-        <UserPicture />
-        <div>
-          <ion-icon on name="heart-outline"></ion-icon>
-        </div>
-        <p>13,5k</p>
-      </div>
-      <div>
-        <h1>Juvenal Juvêncio</h1>
-        <p>
-          lorem saubsafub asubfsuf b apsuofsufb apsoub fpasu fb ausbf pusfb af
-          baps bapsuf baps fubaspf ubaspf bsapf ubasfp bas pfububf asufbsapufbas
-          ufbas pb apsufbapsufbaspf ubaspfubsafp
-        </p>
-        <LinkSection>
-          <div>
-            <h2>Bla bla bla bla</h2>
-            <p>
-              lorem saubsafub asubfsuf b apsuofsufb apsoub fpasu fb ausbf pusfb
-              af baps bapsuf baps fubaspf ubaspf bsapf ubasfp bas pfububf
-              asufbsapufbas ufbas pb apsufbapsufbaspf ubaspfubsafp
-            </p>
-          </div>
-          <img
-            alt=""
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8Vyp-mi0x3JFTE66-dkmRIxEFdfe1byjMjQ&usqp=CAU"
-          ></img>
-        </LinkSection>
-      </div>
-    </Container>
->>>>>>> 3a5b1c8f1e0571b8c41fd9fee349c4ef010157c1
   );
 }
 
@@ -160,23 +122,14 @@ const Container = styled.div`
       margin-bottom: 8px;
     }
     :first-child {
-<<<<<<< HEAD
       height: 50vh;
-=======
-        height: 50vh;
->>>>>>> 3a5b1c8f1e0571b8c41fd9fee349c4ef010157c1
       > img {
         margin-bottom: 12px;
       }
       ion-icon {
         font-size: 20px;
-<<<<<<< HEAD
         :hover {
           cursor: pointer;
-=======
-        :hover{
-            cursor: pointer;
->>>>>>> 3a5b1c8f1e0571b8c41fd9fee349c4ef010157c1
         }
       }
       display: flex;
@@ -197,23 +150,15 @@ const LinkSection = styled.section`
   h2 {
     font-size: 16px;
   }
-<<<<<<< HEAD
   p {
     text-align: justify;
   }
   > img {
-=======
-  p{
-    text-align: justify;
-  }
-  >img{
->>>>>>> 3a5b1c8f1e0571b8c41fd9fee349c4ef010157c1
     width: 155px;
     height: 155px;
     margin-left: 8px;
   }
 `;
-<<<<<<< HEAD
 
 const Timeline = styled.h1`
   width: 145px;
@@ -289,5 +234,3 @@ const FormContainer = styled.form`
     }
   }
 `;
-=======
->>>>>>> 3a5b1c8f1e0571b8c41fd9fee349c4ef010157c1
