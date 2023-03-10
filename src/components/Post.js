@@ -1,101 +1,182 @@
-import { useState } from "react";
 import styled from "styled-components";
+import { useState, useEffect, useContext} from "react";
+import axios from "axios";
+import PostContext from "../contexts/PostContext.js";
 //Components
-import UserPicture from "./UserPicture";
+import UserPicture from "./UserPicture.js";
+
 
 export default function Post() {
   const [liked, setLiked] = useState(false);
-
+  const [setPosts] = useContext(PostContext);
+  /* const nav = useNavigate(); */
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/posts")
+      .then((response) => {
+        setPosts(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [setPosts]);
   return (
-    <Container liked={liked}>
-      <div>
-        <UserPicture />
-        <div>
-          <ion-icon
-            onClick={() => setLiked(!liked)}
-            name={liked ? "heart" : "heart-outline"}
-          ></ion-icon>
-        </div>
-        <p>16,5k</p>
+    <PostBox>
+      <div className="like">
+        <UserPicture/>
+        <ion-icon
+          on
+          name={liked ? "heart" : "heart-outline"}
+          onClick={() => setLiked(!liked)}
+        ></ion-icon>
+        <span>13 likes</span>
       </div>
-
-      <div>
-        <h1>Juvenal Juvêncio</h1>
-        <p>
-          lorem saubsafub asubfsuf b apsuofsufb apsoub fpasu fb ausbf pusfb af
-          baps bapsuf baps fubaspf ubaspf bsapf ubasfp bas pfububf asufbsapufbas
-          ufbas pb apsufbapsufbaspf ubaspfubsafp
-        </p>
-        <LinkSection>
+      <PostContent>
+        <h2>Juvenal Juvêncio</h2>
+        <h3>
+          Muito maneiro esse tutorial de Material UI com React, deem uma olhada!
+        </h3>
+        <LinkPreview>
           <div>
-            <h2>Bla bla bla bla</h2>
-            <p>
-              lorem saubsafub asubfsuf b apsuofsufb apsoub fpasu fb ausbf pusfb
-              af baps bapsuf baps fubaspf ubaspf bsapf ubasfp bas pfububf
-              asufbsapufbas ufbas pb apsufbapsufbaspf ubaspfubsafp
-            </p>
+            <h1>Como aplicar o Material UI em um projeto React </h1>
+            <h2>
+              Hey! I have moved this tutorial to my personal blog. Same content,
+              new location. Sorry about making you click through to another
+              page.
+            </h2>
+            <h3>https://medium.com/@pshrmn/a-simple-react-router</h3>
           </div>
-          <img
-            alt=""
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8Vyp-mi0x3JFTE66-dkmRIxEFdfe1byjMjQ&usqp=CAU"
-          ></img>
-        </LinkSection>
-      </div>
-    </Container>
+          <img src="https://ionicframework.com/docs/icons/logo-react-icon.png" alt="" />
+        </LinkPreview>
+      </PostContent>
+    </PostBox>
   );
 }
 
-const Container = styled.div`
-  background-color: #171717;
+const PostBox = styled.div`
+  width: 611px;
+  height: 276px;
+  background: #171717;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
-  padding: 16px;
+  margin-bottom: 12px;
+  position: relative;
   display: flex;
-  margin: 32px 0;   
-  > div {
+  padding: 16px;
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 26.5px;
+    margin-right: 20px;
+  }
+  .like {
+    display: flex;
+    flex-direction: column;
     color: #ffffff;
-    > h1 {
-      font-size: 20px;
-    }
-    > p {
-      font-size: 16px;
-      margin-bottom: 8px;
-    }
-    &:first-child {
-      /* height: 50vh; */
-      > img {
-        margin-bottom: 12px;
+    /* width: 50px; */
+    /* background-color: red; */
+    ion-icon {
+      margin-top: 4px;
+      width: 20px;
+      height: 20px;
+      padding: 15px 15px 0px 15px;
+      :hover {
+        cursor: pointer;
       }
-      ion-icon {
-        font-size: 20px;
-        color: ${(props) => (props.liked ? "#AC0000" : "#FFFFFF")};
-        &:hover {
-          cursor: pointer;
-        }
-      }
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      margin-right: 12px;
+    }
+    span {
+      width: 50px;
+      height: 13px;
+      padding: 5px;
+      margin-left: 2px;
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 11px;
+      line-height: 13px;
+      text-align: center;
+      color: #ffffff;
     }
   }
 `;
 
-const LinkSection = styled.section`
+const PostContent = styled.div`
+  height: 256px;
+  width: 502px;
   display: flex;
-  color: #ffffff;
-  border: solid 1px #c4c4c4;
-  border-radius: 11px;
-  padding: 8px;
+  flex-direction: column;
+  gap: 8px;
   h2 {
-    font-size: 16px;
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 23px;
+    width: 502px;
+    height: 23px;
+    color: #ffffff;
   }
-  p {
-    text-align: justify;
+  h3 {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 20px;
+
+    color: #b7b7b7;
   }
-  > img {
-    width: 155px;
-    height: 155px;
-    margin-left: 8px;
+`;
+
+const LinkPreview = styled.div`
+  width: 503px;
+  height: 155px;
+  border: 1px solid #4d4d4d;
+  border-radius: 11px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  /* background-color: lightcyan; */
+  /* flex-direction: column; */
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    h1 {
+      width: 250px;
+      height: 38px;
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      color: #cecece;
+    }
+    h2 {
+      width: 303px;
+      height: 39px;
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 11px;
+      line-height: 13px;
+      color: #9b9595;
+    }
+    h3 {
+      width: 263.19px;
+      height: 13px;
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 11px;
+      line-height: 13px;
+      color: #cecece;
+      margin-top: 8px;
+    }
+  }
+  img {
+    margin-left: 40px;
+    height: 100%;
+    width: auto;
+    border-radius: 0px 12px 13px 0px;
   }
 `;
