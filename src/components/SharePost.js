@@ -12,7 +12,7 @@ export default function SharePostBox() {
     event.preventDefault();
     setIsSubmitting(true);
     axios
-      .post("http://localhost:5000/posts", form)
+      .post("http://localhost:5000/home/posts", form)
       .then((response) => {
         console.log(response.data);
         event.target.reset();

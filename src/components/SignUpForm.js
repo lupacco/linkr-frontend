@@ -7,7 +7,7 @@ export default function SingUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [picture, setPicture] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
 
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ export default function SingUpPage() {
       email,
       password,
       username,
-      picture
+      pictureUrl
     };
 
     axios.post(`http://localhost:5000/signup`, body)
@@ -61,8 +61,8 @@ export default function SingUpPage() {
         <input
           type="text"
           placeholder="picture url"
-          value={picture}
-          onChange={(e) => setPicture(e.target.value)}
+          value={pictureUrl}
+          onChange={(e) => setPictureUrl(e.target.value)}
           required
         />
 
@@ -104,6 +104,10 @@ export const Button = styled.button`
   text-align: center;
   margin-top: 14px;
   margin-bottom: 24px;
+
+  &:hover{
+    cursor: pointer;
+  }
 `;
 const Form = styled.form`
   width: 100%;
