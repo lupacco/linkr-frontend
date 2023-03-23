@@ -63,7 +63,6 @@ export default function SingUpPage() {
           placeholder="picture url"
           value={pictureUrl}
           onChange={(e) => setPictureUrl(e.target.value)}
-          required
         />
 
         <Button type="submit">Cadastrar</Button>

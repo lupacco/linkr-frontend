@@ -1,29 +1,30 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 import axios from "axios";
-import PostContext from "../contexts/PostContext.js";
+import { UserContext } from "../contexts/UserProvider";
 
-export default function SharePostBox() {
+
+export default function SharePost() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({});
-  const [posts, setPosts] = useContext(PostContext);
+  const {myUser} = useContext(UserContext)
 
   function handleSubmit(event) {
     event.preventDefault();
     setIsSubmitting(true);
-    axios
-      .post("http://localhost:5000/home/posts", form)
-      .then((response) => {
-        console.log(response.data);
-        event.target.reset();
-        setPosts([...posts, response.data]);
-        setIsSubmitting(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsSubmitting(false);
-        alert("There was an error publishing your link");
-      });
+    // axios
+    //   .post("http://localhost:5000/home/posts", form)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     event.target.reset();
+    //     setPosts([...posts, response.data]);
+    //     setIsSubmitting(false);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     setIsSubmitting(false);
+    //     alert("There was an error publishing your link");
+    //   });
   }
 
   function handleForm({ value, name }) {
@@ -33,8 +34,8 @@ export default function SharePostBox() {
     });
   }
   return (
-    <SharePost>
-      <img src="https://i.imgflip.com/2pybwo.jpg?a465984" alt="" />
+    <SharePostContainer>
+      <img src={myUser.pictureUrl} alt="" />
       <PostForm onSubmit={handleSubmit}>
         <h1>What are you going to share today?</h1>
         <FormInput
@@ -60,7 +61,7 @@ export default function SharePostBox() {
       <PostButton type="submit" disabled={isSubmitting}>
         <h1>{isSubmitting ? "Publishing..." : "Publish"}</h1>
       </PostButton>
-    </SharePost>
+    </SharePostContainer>
   );
 }
 
@@ -90,7 +91,7 @@ const PostButton = styled.div`
   }
 `;
 
-const SharePost = styled.div`
+const SharePostContainer = styled.div`
   width: 611px;
   height: 209px;
   background: #ffffff;
