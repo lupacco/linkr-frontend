@@ -15,11 +15,6 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log('myUser')
-    console.log(myUser)
-  }, [myUser])
-
   function sendForm(e) {
     e.preventDefault();
     setLoading(true);
@@ -31,13 +26,8 @@ export default function SignIn() {
 
     signIn(body)
       .then((res) => {
-        console.log('atual my user')
-        console.log(myUser)
-        console.log('response')
-        console.log(res.data)
-        console.log('new obj')
         const newObj = {...myUser, ...res.data}
-        console.log(newObj)
+        
         setMyUser(newObj)
         resetForm();
         localStorage.setItem("pictureUrl", JSON.stringify(res.data.pictureUrl));
