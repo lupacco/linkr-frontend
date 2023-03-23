@@ -1,27 +1,18 @@
 import styled from "styled-components";
 import { useState, useEffect, useContext} from "react";
 import axios from "axios";
-import PostContext from "../contexts/PostContext.js";
+
 //Components
 import UserPicture from "./UserPicture.js";
+import { UserContext } from "../contexts/UserProvider.js";
 
 
 export default function Post() {
   const [liked, setLiked] = useState(false);
-  const [setPosts] = useContext(PostContext);
-  /* const nav = useNavigate(); */
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/posts")
-      .then((response) => {
-        setPosts(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [setPosts]);
+  const {myUser} = useContext(UserContext)
+  
   return (
-    <PostBox>
+    <PostContainer>
       <div className="like">
         <UserPicture/>
         <ion-icon
@@ -32,7 +23,7 @@ export default function Post() {
         <span>13 likes</span>
       </div>
       <PostContent>
-        <h2>Juvenal Juvêncio</h2>
+        <h2>{myUser.username}</h2>
         <h3>
           Muito maneiro esse tutorial de Material UI com React, deem uma olhada!
         </h3>
@@ -49,11 +40,11 @@ export default function Post() {
           <img src="https://ionicframework.com/docs/icons/logo-react-icon.png" alt="" />
         </LinkPreview>
       </PostContent>
-    </PostBox>
+    </PostContainer>
   );
 }
 
-const PostBox = styled.div`
+const PostContainer = styled.div`
   width: 611px;
   height: 276px;
   background: #171717;

@@ -8,7 +8,7 @@ import axios from "axios";
 
 
 function signIn(body){;
-     return axios.post(`http://localhost:5000/signin`, body);
+     return axios.post(`http://localhost:5000/`, body);
  };
  
 

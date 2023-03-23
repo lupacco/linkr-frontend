@@ -1,10 +1,14 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from "../contexts/UserProvider";
 
 export default function UserPicture() {
+  const {myUser} = useContext(UserContext)
+
   return (
     <Picture
       alt=""
-      src="https://series.band.uol.com.br/wp-content/uploads/2014/05/queixo-rubro-300x300-1.jpg"
+      src={myUser.pictureUrl}
     ></Picture>
   );
 }

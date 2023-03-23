@@ -1,9 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { signIn } from "../services/services.js";
 import styled from "styled-components";
+import { UserContext } from "../contexts/UserProvider.js";
+
+
 
 export default function SignIn() {
+  //Contexts
+  const {myUser, setMyUser} = useContext(UserContext)
+  //States
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,8 +26,11 @@ export default function SignIn() {
 
     signIn(body)
       .then((res) => {
+        const newObj = {...myUser, ...res.data}
+        
+        setMyUser(newObj)
         resetForm();
-        localStorage.setItem("profileImg", JSON.stringify(res.data.picture_url));
+        localStorage.setItem("pictureUrl", JSON.stringify(res.data.pictureUrl));
         localStorage.setItem("token", JSON.stringify(res.data.token));
         localStorage.setItem("username", JSON.stringify(res.data.username));
         localStorage.setItem("id", JSON.stringify(res.data.id));
@@ -36,8 +45,7 @@ export default function SignIn() {
           return;
         }
 
-        resetForm();
-        alert("Tente novamente mais tarde!");
+        alert("Há algo de errado com o servidor!");
         setLoading(false)
       })
   }
