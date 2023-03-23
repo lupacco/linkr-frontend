@@ -1,38 +1,63 @@
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { UserContext } from "../contexts/UserProvider";
 
-
 export default function SharePost() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [form, setForm] = useState({});
-  const {myUser} = useContext(UserContext)
+  const [description, setDescription] = useState("");
+  const [url, setUrl] = useState("");
+  const { myUser } = useContext(UserContext);
+
+  function createHashTagsArray(description) {
+    const regexHashtag = /#\w+/g;
+    const hashtags = [];
+
+    let match;
+    while ((match = regexHashtag.exec(description)) !== null) {
+      hashtags.push(match[0]);
+    }
+
+    return hashtags;
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
     setIsSubmitting(true);
-    // axios
-    //   .post("http://localhost:5000/home/posts", form)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     event.target.reset();
-    //     setPosts([...posts, response.data]);
-    //     setIsSubmitting(false);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     setIsSubmitting(false);
-    //     alert("There was an error publishing your link");
-    //   });
+
+    let hashtags = createHashTagsArray(description);
+    let post = {
+      url:url,
+      description:description,
+      hashtags:hashtags
+    }
+
+    axios
+      .post("http://localhost:5000/home/posts", post, {
+        headers: {
+          Authorization: `Bearer ${myUser.token}`
+        }
+      })
+      .then((res) => {
+        console.log(res.data);
+        event.target.reset();
+        setIsSubmitting(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsSubmitting(false);
+        alert("Erro ao publicar o link.");
+      });
   }
 
-  function handleForm({ value, name }) {
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  }
+  // useEffect(() => {
+  //   if(description && url){
+  //     setIsSubmitting(true)
+  //   } else{
+  //     setIsSubmitting(false)
+  //   }
+  // }, [description, url])
+
   return (
     <SharePostContainer>
       <img src={myUser.pictureUrl} alt="" />
@@ -40,12 +65,12 @@ export default function SharePost() {
         <h1>What are you going to share today?</h1>
         <FormInput
           data-test="link"
+          disabled={isSubmitting}
           placeholder="http://..."
           type="url"
           name="url"
-          value={form.url}
-          onChange={handleForm}
-          disabled={isSubmitting}
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
           required
         />
         <FormInput
@@ -53,39 +78,34 @@ export default function SharePost() {
           placeholder="Awesome article about #javascript"
           type="text"
           name="content"
-          value={form.content}
-          onChange={handleForm}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           disabled={isSubmitting}
         />
+        <PostButton type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Publishing..." : "Publish"}
+        </PostButton>
       </PostForm>
-      <PostButton type="submit" disabled={isSubmitting}>
-        <h1>{isSubmitting ? "Publishing..." : "Publish"}</h1>
-      </PostButton>
     </SharePostContainer>
   );
 }
 
-const PostButton = styled.div`
+const PostButton = styled.button`
   width: 112px;
   height: 31px;
   background: ${({ isSubmitting }) => (isSubmitting ? "#75a8eb" : "#1877f2")};
   border-radius: 5px;
+  border-style: none;
   position: absolute;
   bottom: 10px;
   right: 22px;
   display: flex;
   justify-content: center;
   align-items: center;
-  h1 {
-    width: 46px;
-    height: 17px;
-    font-family: "Lato";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 17px;
-    color: #ffffff;
-  }
+  font-family: "Lato";
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
   :hover {
     cursor: pointer;
   }
