@@ -50,13 +50,6 @@ export default function SharePost() {
       });
   }
 
-  // useEffect(() => {
-  //   if(description && url){
-  //     setIsSubmitting(true)
-  //   } else{
-  //     setIsSubmitting(false)
-  //   }
-  // }, [description, url])
 
   return (
     <SharePostContainer>

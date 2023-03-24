@@ -1,15 +1,37 @@
+import axios from "axios";
+import { useEffect, useContext } from "react";
+import { PostContext } from "../contexts/PostProvider";
+//Components
 import Header from "../components/Header.js";
 import styled from "styled-components";
-import Post from "../components/Post.js"
+import Post from "../components/Post.js";
 import SharePost from "../components/SharePost.js";
 
 export default function Home() {
+  //Post Contexts
+  const {posts, setPosts} = useContext(PostContext);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/home")
+      .then((res) => {
+        setPosts(res.data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  console.log(posts[0])
+
   return (
     <Container>
       <Header />
       <Title>timeline</Title>
-      <SharePost/>
-      <Post/>
+      <SharePost />
+      {posts.map(post => (
+        <Post key={post.id} />
+      ))}
     </Container>
   );
 }

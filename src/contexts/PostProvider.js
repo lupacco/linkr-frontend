@@ -1,14 +1,24 @@
 import { createContext, useState } from "react";
 
-const PostContext = createContext();
+export const PostContext = createContext();
 
 export default function PostProvider({ children }) {
-  const [posts, setPosts] = useState({});
+  const [posts, setPosts] = useState([]);
+  const [myUserPosts, setMyUserPosts] = useState([]);
+  const [selectedUserPosts, setSelectedUserposts] = useState([]);
 
   return (
-    <PostContext.Provider value={{posts, setPosts}}>
+    <PostContext.Provider
+      value={{
+        posts,
+        setPosts,
+        myUserPosts,
+        setMyUserPosts,
+        selectedUserPosts,
+        setSelectedUserposts,
+      }}
+    >
       {children}
     </PostContext.Provider>
   );
 }
-

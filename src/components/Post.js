@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect, useContext} from "react";
-import axios from "axios";
+import { customFetcher } from "./utils/customFetcher.js";
 
 //Components
 import UserPicture from "./UserPicture.js";
@@ -10,6 +10,11 @@ import { UserContext } from "../contexts/UserProvider.js";
 export default function Post() {
   const [liked, setLiked] = useState(false);
   const {myUser} = useContext(UserContext)
+
+  useEffect(() => {
+    const test = customFetcher('http://www.youtube.com.br')
+    console.log(test)
+  },[])
   
   return (
     <PostContainer>
@@ -27,7 +32,7 @@ export default function Post() {
         <h3>
           Muito maneiro esse tutorial de Material UI com React, deem uma olhada!
         </h3>
-        <LinkPreview>
+        <LinkPreviewContainer>
           <div>
             <h1>Como aplicar o Material UI em um projeto React </h1>
             <h2>
@@ -38,7 +43,7 @@ export default function Post() {
             <h3>https://medium.com/@pshrmn/a-simple-react-router</h3>
           </div>
           <img src="https://ionicframework.com/docs/icons/logo-react-icon.png" alt="" />
-        </LinkPreview>
+        </LinkPreviewContainer>
       </PostContent>
     </PostContainer>
   );
@@ -118,7 +123,7 @@ const PostContent = styled.div`
   }
 `;
 
-const LinkPreview = styled.div`
+const LinkPreviewContainer = styled.div`
   width: 503px;
   height: 155px;
   border: 1px solid #4d4d4d;
@@ -126,8 +131,7 @@ const LinkPreview = styled.div`
   padding: 20px;
   display: flex;
   align-items: center;
-  /* background-color: lightcyan; */
-  /* flex-direction: column; */
+
   div {
     display: flex;
     flex-direction: column;
