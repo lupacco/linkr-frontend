@@ -7,14 +7,14 @@ import UserPicture from "./UserPicture.js";
 import { UserContext } from "../contexts/UserProvider.js";
 
 
-export default function Post() {
+export default function Post({username, description, url, createdAt, userId}) {
   const [liked, setLiked] = useState(false);
   const {myUser} = useContext(UserContext)
 
-  useEffect(() => {
-    const test = customFetcher('http://www.youtube.com.br')
-    console.log(test)
-  },[])
+  // useEffect(() => {
+  //   const test = customFetcher('http://www.youtube.com.br')
+  //   console.log(test)
+  // },[])
   
   return (
     <PostContainer>
@@ -28,9 +28,9 @@ export default function Post() {
         <span>13 likes</span>
       </div>
       <PostContent>
-        <h2>{myUser.username}</h2>
+        <h2>{username}</h2>
         <h3>
-          Muito maneiro esse tutorial de Material UI com React, deem uma olhada!
+          {description}
         </h3>
         <LinkPreviewContainer>
           <div>

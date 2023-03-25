@@ -7,10 +7,12 @@ import styled from "styled-components";
 import Post from "../components/Post.js";
 import SharePost from "../components/SharePost.js";
 
+
 export default function Home() {
   //Post Contexts
   const {posts, setPosts} = useContext(PostContext);
-
+  
+  console.log(posts)
   useEffect(() => {
     axios
       .get("http://localhost:5000/home")
@@ -30,7 +32,13 @@ export default function Home() {
       <Title>timeline</Title>
       <SharePost />
       {posts.map(post => (
-        <Post key={post.id} />
+        <Post key={post.id}
+              username={post.username}
+              description={post.description}
+              url={post.url}
+              createdAt={post.createdAt}
+              userId={post.userId}
+        />
       ))}
     </Container>
   );
